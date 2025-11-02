@@ -1,37 +1,32 @@
-// index.js (backend root)
+// index.js
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
+const app = express();
 const cors = require('cors');
 
-const app = express();
 app.use(express.json());
-
-// Allow your frontend on Render
 app.use(cors({
-  origin: 'https://online-food-frontend2.onrender.com',
+  origin: process.env.FRONTEND_URL || '*',
   credentials: true
 }));
 
+// Root health-check
 app.get('/', (req, res) => {
-  res.json({ message: 'Backend running successfully!' });
+  res.json({ ok: true, message: 'Backend root OK' });
+});
+
+// API health-check
+app.get('/api/health', (req, res) => {
+  res.json({ ok: true, time: new Date().toISOString() });
+});
+
+// Example test auth route
+app.get('/api/auth', (req, res) => {
+  res.json({ ok: true, auth: 'test route' });
 });
 
 const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
 
-// Connect MongoDB and start server
-async function startServer() {
-  try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
-    console.log('✅ MongoDB connected');
-    app.listen(PORT, () => console.log(`🚀 Server started on port ${PORT}`));
-  } catch (err) {
-    console.error('❌ Error starting server:', err);
-    process.exit(1);
-  }
-}
-
-startServer();
