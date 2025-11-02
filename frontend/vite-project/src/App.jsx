@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingCart, User, MapPin, Check, Clock, Bike, Star, LogOut, Package, ChefHat } from 'lucide-react';
 import './App.css';
 
-VITE_API_URL=https://online-food-backend1.onrender.com/api
+ const backendURL = import.meta.env.VITE_API_URL;
 
 
 
