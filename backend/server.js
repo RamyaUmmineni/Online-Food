@@ -4,6 +4,14 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 dotenv.config();
+app.use(cors({
+  origin: [
+    process.env.FRONTEND_URL,          // if set to http://localhost:5173 or the render frontend URL
+    "http://localhost:5173",
+   "https://online-food-3-frontend3.onrender.com/"
+  ],
+  credentials: true
+}));
 
 const app = express();
 const PORT = process.env.PORT || 5000;
