@@ -5,6 +5,7 @@ import './App.css';
  const backendURL = import.meta.env.VITE_API_URL;
 
 
+console.log("Using backend API URL:", API_URL);
 
 export default function App() {
   const [user, setUser] = useState(null);
